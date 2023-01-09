@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"path"
@@ -17,7 +16,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl, err := template.ParseFiles(path.Join("views", "index.html"))
+	tmpl, err := template.ParseFiles(path.Join("views", "index.html"), path.Join("views", "layout.html"))
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
@@ -44,6 +43,7 @@ func HelloHandler(w http.ResponseWriter, r *http.Request) {
 func MarioHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello mario, saya sedang belajar golang"))
 }
+
 func ProductHandler(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	idNumb, err := strconv.Atoi(id)
@@ -52,7 +52,23 @@ func ProductHandler(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	// w.Write([]byte("Product page"))
 
-	fmt.Fprintf(w, "Product page: %d", idNumb)
+	// fmt.Fprintf(w, "Product page: %d", idNumb)
+	data := map[string]interface{}{
+		"content": idNumb,
+	}
+
+	tmpl, err := template.ParseFiles(path.Join("views", "product.html"), path.Join("views", "layout.html"))
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
+		return
+	}
 }
