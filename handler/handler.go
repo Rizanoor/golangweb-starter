@@ -10,6 +10,8 @@ import (
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf(r.URL.Path)
+
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -22,7 +24,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = tmpl.Execute(w, nil)
+	data := map[string]interface{}{
+		"title":   "Belajar golang web",
+		"content": "Saya sedang belajar golang web bersama balala",
+	}
+
+	err = tmpl.Execute(w, data)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
