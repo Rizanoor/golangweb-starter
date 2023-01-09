@@ -2,8 +2,11 @@ package handler
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"path"
 	"strconv"
+	"text/template"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -11,11 +14,26 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	w.Write([]byte("Hello ini halaman home"))
+
+	tmpl, err := template.ParseFiles(path.Join("views", "index.html"))
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Error is happening, keep calm", http.StatusInternalServerError)
+		return
+	}
 }
+
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello world, saya sedang belajar golang"))
 }
+
 func MarioHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello mario, saya sedang belajar golang"))
 }
