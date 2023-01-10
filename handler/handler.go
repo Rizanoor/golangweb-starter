@@ -31,9 +31,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// data := entity.Product{ID: 1, Name: "Mobil", Price: 2600000, Stock: 3},
 	data := []entity.Product{
-		{ID: 1, Name: "Mobilio", Price: 22000000, Stock: 3},
-		{ID: 2, Name: "XL7", Price: 262000000, Stock: 2},
-		{ID: 3, Name: "CR-V", Price: 32000000, Stock: 2},
+		{ID: 1, Name: "Mobilio", Price: 22000000, Stock: 11},
+		{ID: 2, Name: "XL7", Price: 262000000, Stock: 8},
+		{ID: 3, Name: "CR-V", Price: 32000000, Stock: 1},
 	}
 
 	err = tmpl.Execute(w, data)
