@@ -29,7 +29,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	// 	"content": "Saya sedang belajar golang web bersama balala",
 	// }
 
-	data := entity.Product{ID: 1, Name: "Mobil", Price: 2600000, Stock: 3}
+	// data := entity.Product{ID: 1, Name: "Mobil", Price: 2600000, Stock: 3},
+	data := []entity.Product{
+		{ID: 1, Name: "Mobilio", Price: 22000000, Stock: 3},
+		{ID: 2, Name: "XL7", Price: 262000000, Stock: 2},
+		{ID: 3, Name: "CR-V", Price: 32000000, Stock: 2},
+	}
 
 	err = tmpl.Execute(w, data)
 	if err != nil {
