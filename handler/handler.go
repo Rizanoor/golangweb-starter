@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"golangweb/entity"
 	"log"
 	"net/http"
 	"path"
@@ -23,10 +24,12 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := map[string]interface{}{
-		"title":   "Belajar golang web",
-		"content": "Saya sedang belajar golang web bersama balala",
-	}
+	// data := map[string]interface{}{
+	// 	"title":   "Belajar golang web",
+	// 	"content": "Saya sedang belajar golang web bersama balala",
+	// }
+
+	data := entity.Product{ID: 1, Name: "Mobil", Price: 2600000, Stock: 3}
 
 	err = tmpl.Execute(w, data)
 	if err != nil {
